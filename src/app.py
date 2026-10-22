@@ -1,13 +1,13 @@
-from flask import Flask
+from flask import Flask, jsonify
 
 # Initialize the Flask application
 app = Flask(__name__)
 
 
 # Define the route for the home/root URL
-@app.route("/")
+@app.route("/test")
 def home():
-    return "<h1>Hello, World!</h1><p>Welcome to your simple Flask app.</p>"
+    return jsonify(message="Test complete.")
 
 
 # Run the local development server when this file is executed directly
