@@ -35,5 +35,5 @@ def register_routes(app):
         from models import User
         from app import db
 
-        users = User.query.all()
+        # users = User.query.all()
         return jsonify("hello")
