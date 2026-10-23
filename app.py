@@ -1,38 +1,33 @@
 from flask import Flask, jsonify, request
-from sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.utils import secure_filename
+import os
 import pandas as pd
 
-# Initialize the Flask application
-app = Flask(__name__)
 
+def create_app():
 
-# Define the route for the home/root URL
-@app.route("/test")
-def home():
-    return jsonify(message="Test complete.")
+    # Initialize the Flask application
+    app = Flask(__name__)
 
+    db = SQLAlchemy()
 
-@app.route("/file_upload", methods=["POST"])
-def file_upload():
-    if "file" not in request.files:
-        return jsonify({"error": "no file selected"}), 400
+    app.config["SQLALCHEMY_DATABASE_URI"] = (
+        f"mysql+pymysql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}/{os.getenv('DB_NAME')}"
+    )
 
-    file = request.files["file"]
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
+        "pool_size": 10,
+        "pool_recycle": 3600,
+        "pool_pre_ping": True,
+    }
 
-    if file.filename == "":
-        return jsonify({"error": "no file selected"}), 400
+    from routes import register_routes
 
-    if (
-        file.content_type
-        == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        or file.content_type == "application/vnd.ms-excel"
-    ):
-        df = pd.read_excel(file)
-        return df.to_html()
+    register_routes(app)
 
-    return jsonify({"error": "wrong file type"}), 400
+    return app, db
 
 
 # Run the local development server when this file is executed directly
-if __name__ == "__main__":
-    app.run()
