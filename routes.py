@@ -30,10 +30,10 @@ def register_routes(app):
 
         return jsonify({"error": "wrong file type"}), 400
 
-    @app.route("/users", methods=["GET"])
+    @app.route("/users")
     def get_users():
         from models import User
         from app import db
 
         users = User.query.all()
-        return jsonify([user.username for user in users])
+        return jsonify("hello")
