@@ -4,13 +4,11 @@ from werkzeug.utils import secure_filename
 import os
 import pandas as pd
 
+app = Flask(__name__)
+db = SQLAlchemy()
+
 
 def create_app():
-
-    # Initialize the Flask application
-    app = Flask(__name__)
-
-    db = SQLAlchemy()
 
     app.config["SQLALCHEMY_DATABASE_URI"] = (
         f"mysql+pymysql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}/{os.getenv('DB_NAME')}"
@@ -29,7 +27,7 @@ def create_app():
 
     register_routes(app)
 
-    return app, db
+    return app
 
 
 # Run the local development server when this file is executed directly
