@@ -32,8 +32,8 @@ def register_routes(app):
 
     @app.route("/users")
     def get_users():
-        from models import User
-        from app import db
+        # from models import User
+        # from app import db
 
         # users = User.query.all()
-        return jsonify("hello")
+        return jsonify(message="hello")
