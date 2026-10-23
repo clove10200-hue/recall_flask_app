@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
+import pymysql
 from werkzeug.utils import secure_filename
 import os
 import pandas as pd
