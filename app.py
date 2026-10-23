@@ -23,6 +23,8 @@ def create_app():
         "pool_pre_ping": True,
     }
 
+    db.init_app(app)
+
     from routes import register_routes
 
     register_routes(app)
