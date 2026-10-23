@@ -28,8 +28,9 @@ def file_upload():
         or file.content_type == "application/vnd.ms-excel"
     ):
         df = pd.read_excel(file)
+        return df.to_html()
 
-    return df.to_html()
+    return jsonify({"error": "wrong file type"}), 400
 
 
 # Run the local development server when this file is executed directly
