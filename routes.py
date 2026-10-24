@@ -36,4 +36,9 @@ def register_routes(app):
         from app import db
 
         users = User.query.all()
-        return jsonify([user.__dict__ for user in users])
+        return jsonify(
+            [
+                {"user_id": user.user_id, "username": user.username, "role": user.role}
+                for user in users
+            ]
+        )

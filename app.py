@@ -1,18 +1,22 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-import pymysql
 from werkzeug.utils import secure_filename
-import os
-import pandas as pd
 
 app = Flask(__name__)
 db = SQLAlchemy()
 
 
+DB_USER = "root"  # this is naughty - we'll be replacing it with .env in production
+DB_PASSWORD = "Root2026!!"
+DB_HOST = "127.0.0.1"
+DB_PORT = "3306"
+DB_NAME = "recall"
+
+
 def create_app():
 
     app.config["SQLALCHEMY_DATABASE_URI"] = (
-        f"mysql+pymysql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}/{os.getenv('DB_NAME')}"
+        f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
     )
 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
