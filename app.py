@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+import pymysql
 import os
 import tempfile
 from werkzeug.utils import secure_filename
@@ -22,7 +23,7 @@ def create_app():
         ssl_args = {"ssl": {"ca": temp_ca.name}}
 
     app.config["SQLALCHEMY_DATABASE_URI"] = (
-        f"mysql+pymysql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT', 3306)}/{os.getenv('DB_NAME')}?ssl-mode=REQUIRED"
+        f"mysql+pymysql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT', 3306)}/{os.getenv('DB_NAME')}"
     )
 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
