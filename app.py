@@ -23,7 +23,7 @@ def create_app():
     #    ssl_args = {"ssl": {"ca": temp_ca.name}}
 
     app.config["SQLALCHEMY_DATABASE_URI"] = (
-        f"mysql+pymysql://{os.environ.get('DB_USER')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_HOST')}:{os.environ.get('DB_PORT')}/{os.environ.get('DB_NAME')}"
+        f"mysql+pymysql://{os.environ.get('AIVEN_URI')}"
     )
 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
