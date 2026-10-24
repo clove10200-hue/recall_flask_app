@@ -13,17 +13,17 @@ db = SQLAlchemy()
 
 def create_app():
 
-    ca_cert_content = os.getenv("AIVEN_CA_CERT")
+    # ca_cert_content = os.environ.get("AIVEN_CA_CERT")
 
-    if ca_cert_content:
-        temp_ca = tempfile.NamedTemporaryFile(delete=False)
-        temp_ca.write(ca_cert_content.encode("utf-8"))
-        temp_ca.close()
+    # if ca_cert_content:
+    #    temp_ca = tempfile.NamedTemporaryFile(delete=False)
+    #    temp_ca.write(ca_cert_content.encode("utf-8"))
+    #    temp_ca.close()
 
-        ssl_args = {"ssl": {"ca": temp_ca.name}}
+    #    ssl_args = {"ssl": {"ca": temp_ca.name}}
 
     app.config["SQLALCHEMY_DATABASE_URI"] = (
-        f"mysql+pymysql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT', 3306)}/{os.getenv('DB_NAME')}"
+        f"mysql+pymysql://{os.environ.get('DB_USER')}:{os.environ.get('DB_PASSWORD')}@{os.environ.get('DB_HOST')}:{os.environ.get('DB_PORT')}/{os.environ.get('DB_NAME')}"
     )
 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -31,7 +31,7 @@ def create_app():
         "pool_size": 10,
         "pool_recycle": 3600,
         "pool_pre_ping": True,
-        "connect_args": ssl_args if ca_cert_content else {},
+        # "connect_args": ssl_args if ca_cert_content else {},
     }
 
     db.init_app(app)
