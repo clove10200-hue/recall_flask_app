@@ -24,7 +24,9 @@ def create_app():
 
     #    ssl_args = {"ssl": {"ca": temp_ca.name}}
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = f"{os.getenv('AIVEN_URI')}"
+    app.config["SQLALCHEMY_DATABASE_URI"] = (
+        f"mysql+pymysql:///{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}?sslmode=require"
+    )
 
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SQLALCHEMY_ENGINE_OPTIONS"] = {
