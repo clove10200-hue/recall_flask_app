@@ -31,7 +31,9 @@ def create_app():
         "pool_size": 10,
         "pool_recycle": 3600,
         "pool_pre_ping": True,
-        "connect_args": ssl_args if ca_cert_content else {},
+        "connect_args": {
+            "ssl": {"ca": os.path.join(os.path.dirname(__file__), "ca.pem")}
+        },
     }
 
     db.init_app(app)
