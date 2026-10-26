@@ -15,14 +15,14 @@ db = SQLAlchemy()
 
 def create_app():
 
-    ca_cert_content = os.getenv("AIVEN_CA_CERT")
+    # ca_cert_content = os.getenv("AIVEN_CA_CERT")
 
-    if ca_cert_content:
-        temp_ca = tempfile.NamedTemporaryFile(delete=False)
-        temp_ca.write(ca_cert_content.encode("utf-8"))
-        temp_ca.close()
+    # if ca_cert_content:
+    #    temp_ca = tempfile.NamedTemporaryFile(delete=False)
+    #    temp_ca.write(ca_cert_content.encode("utf-8"))
+    #    temp_ca.close()
 
-        ssl_args = {"ssl": {"ca": temp_ca.name}}
+    #    ssl_args = {"ssl": {"ca": temp_ca.name}}
 
     app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{os.getenv('AIVEN_URI')}"
 
